@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+
+  wordpress:
+    image: wordpress:php7.1
+    restart: always
+    # /var/www/html  tren container
+    ports:
+      - 8080:80
+    environment:
+      # db: là domainName= hostName của container db => thay db = IP address ok
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: dbuser
+      WORDPRESS_DB_PASSWORD: dbpass
+      WORDPRESS_DB_NAME: wordpressdb
+    networks:
+      - wpsite  
+    depends_on:
+      - db  
+
+  # db port = 3306 by default
+  # hostName = DomainName = ServiceName
+  db:
+    image: mysql:5.7
+    # /var/lib/mysql  tren container
+    restart: always
+    # open Port cho MySQL workbench connect at localhost (ko cần dùng phpmyadmin).
+    ports:
+      - 3303:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+    networks:
+      - wpsite  
+
+networks:
+      wpsite:
+      
+        
