@@ -6,10 +6,12 @@ services:
     image: wordpress:php7.1
     restart: always
     # /var/www/html  tren container
+    # hostPort = 8080. dockerPort=80  => http://localhost:8080/
     ports:
       - 8080:80
     environment:
-      # db: là domainName= hostName của container db => thay db = IP address ok
+      # db: là domainName= hostName của container db trong docker network wpsite=> thay db = IP address ok
+      # 3306: dockerPort in docker network
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: dbuser
       WORDPRESS_DB_PASSWORD: dbpass
@@ -25,7 +27,8 @@ services:
     image: mysql:5.7
     # /var/lib/mysql  tren container
     restart: always
-    # open Port cho MySQL workbench connect at localhost (ko cần dùng phpmyadmin).
+    # open Port cho MySQL workbench connect at localhost port 3303 (ko cần dùng phpmyadmin).
+    # hostPort/dockerPort: 3303:3306
     ports:
       - 3303:3306
     environment: 

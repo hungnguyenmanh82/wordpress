@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: wordpress
     networks:
       - wpsite
-  # phpmyadmin
+  # phpmyadmin install tren docker khac MySQL docker cung dc
   phpmyadmin:
     depends_on:
       - db
